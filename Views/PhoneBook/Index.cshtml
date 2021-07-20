@@ -1,0 +1,86 @@
+﻿@model IEnumerable<PhoneBookApp.Models.PhoneBook>
+    <div style="height:50px">
+
+    </div>
+
+    <div style="float:left">
+
+        <p>
+            @Html.ActionLink("Add Business Card", "Create",null,  new { @class = "btn btn-primary" })
+        </p>
+    </div>
+   
+    <div style="float: right; margin-right: 30px;display:inline-flex" >
+        <p style="display:inline;margin-right:20px;padding-top:5px;font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;font-size:18px" class="text-danger">
+            Or Import CSV File
+        </p>
+        <form asp-controller="BusinessCard" asp-action="Index" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" style="display:inline" class = "form-control" />
+
+            <button type="submit" class = "btn btn-primary">Import</button>
+        </form>
+    </div>
+
+<table class="table" style="margin-top:60px">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gender)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date_of_birth)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Photo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Gender)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Date_of_birth)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Email)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Phone)
+    </td>
+    <td>
+        @{
+            var imgSrc = String.Format("data:image/gif;base64,{0}", item.Photo);
+        }
+
+        <img src="@imgSrc" width="50" height="50" />
+
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Address)
+    </td>
+    <td>
+        @Html.ActionLink("import CSV ", "DownloadBusinessCard", new { id = item.Phone }, new { @class = "btn btn-success" })|
+        @Html.ActionLink("Edit", "Edit", new { id = item.Phone }, new { @class = "btn btn-warning" }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.Phone }, new { @class = "btn btn-danger" })
+    </td>
+</tr>
+}
+
+</table>
